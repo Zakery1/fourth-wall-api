@@ -12,7 +12,7 @@ app.options('*', cors());
 
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Zak's api");
 });
 
 
