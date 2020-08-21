@@ -10,12 +10,11 @@ app.use(
 );
 app.options('*', cors());
 
-const port = 8080;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
 app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
+  // console.log(`Listening at http://localhost:${port}`);
 });
