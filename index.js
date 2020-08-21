@@ -12,7 +12,7 @@ app.options('*', cors());
 
 const port = 8080;
 
-app.get("/api/hello", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
