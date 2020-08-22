@@ -34,7 +34,7 @@ db.once("open", function () {
 });
 
 app.get("/", (req, res) => {
-  res.send(myCat);
+  res.send("hello");
 });
 
 app.listen(process.env.PORT || 8080, function () {
