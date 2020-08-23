@@ -13,7 +13,8 @@ app.options("*", cors());
 
 var uristring =
   process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL;
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/HelloMongoose';
 
 // The http server will listen to an appropriate port, or default to
 // port 5000.
