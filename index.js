@@ -52,9 +52,9 @@ console.log(johndoe.name)
 
 
 app.get("/", (req, res) => {
-  res.send("hey");
+  res.send(johndoe.name);
 });
 
 app.listen(process.env.PORT || 8080, function () {
-  console.log("server running on port 8080", "");
+  console.log("server running on port 8080");
 });
