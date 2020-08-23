@@ -3,13 +3,6 @@ const app = express();
 var cors = require("cors");
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/test", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
-db.on("db error", console.error.bind(console, "db connection error:"));
-
 app.use(
   cors({
     credentials: true,
@@ -18,23 +11,47 @@ app.use(
 );
 app.options("*", cors());
 
-let myCat = '';
-db.once("open", function () {
-  const kittySchema = new mongoose.Schema({
-    name: String,
-  });
+var uristring =
+  process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL;
 
-  const Kitten = mongoose.model("Kitten", kittySchema);
+// The http server will listen to an appropriate port, or default to
+// port 5000.
+var theport = process.env.PORT || 5000;
 
-  Kitten.find(function (err, kittens) {
-    if (err) return console.error(err);
-    console.log(kittens[0].name)
-    myCat = kittens[0].name;
-  });
+// Makes connection asynchronously.  Mongoose will queue up database
+// operations and release them when the connection is complete.
+mongoose.connect(uristring, { useNewUrlParser: true, useUnifiedTopology: true  }, function (err, res) {
+  if (err) {
+    console.log("ERROR connecting to: " + uristring + ". " + err);
+  } else {
+    console.log("Succeeded connected to: " + uristring);
+  }
 });
 
+var userSchema = new mongoose.Schema({
+  name: {
+    first: String,
+    last: { type: String, trim: true }
+  },
+  age: { type: Number, min: 0 }
+});
+
+var PUser = mongoose.model('PowerUsers', userSchema);
+// Creating one user.
+var johndoe = new PUser ({
+  name: { first: 'John', last: '  Doe   ' },
+  age: 25
+});
+
+// Saving it to the database.
+johndoe.save(function (err) {if (err) console.log ('Error on save!')});
+
+console.log(johndoe.name)
+
+
 app.get("/", (req, res) => {
-  res.send("hello");
+  res.send("hey");
 });
 
 app.listen(process.env.PORT || 8080, function () {
