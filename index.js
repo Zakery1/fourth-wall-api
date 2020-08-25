@@ -3,8 +3,11 @@ const app = express();
 var cors = require("cors");
 
 const mongoose = require("mongoose");
+
+const movieController = require('./controller/movieController');
+
 const userSchema = require("./model/userSchema.js");
-const movieSchema = require("./model/movieSchema.js");
+
 
 app.options("*", cors());
 
@@ -29,7 +32,7 @@ connection.once("open", function () {
 });
 
 const User = mongoose.model("user", userSchema);
-const Movie = mongoose.model("movie", movieSchema);
+
 
 // const luka = new User({ name: 'Luka' });
 
@@ -60,14 +63,7 @@ const Movie = mongoose.model("movie", movieSchema);
 // Call start
 // lookUp(searchTerms);
 
-app.get("/api/movie/search", (req, res) => {
-  async function lookUp(st) {
-    const newReg = new RegExp(st, "i");
-    const myResult = await Movie.find({ name: newReg }, "name episodes").exec();
-    res.send(myResult);
-  }
-  lookUp(req.query.movie);
-});
+app.get("/api/movie/search", movieController.searchMovies);
 
 app.get("/", (req, res) => {
   res.send("welcome to the Stage 18 Podcast");
