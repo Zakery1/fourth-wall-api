@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
 var cors = require("cors");
+const bodyParser = require('body-parser');
 
 const mongoose = require("mongoose");
 
-const movieController = require('./controller/movieController');
+const movieController = require("./controller/movieController");
 
 const userSchema = require("./model/userSchema.js");
-
 
 app.options("*", cors());
 
@@ -17,6 +17,8 @@ app.use(
     origin: true,
   })
 );
+
+app.use(bodyParser.json());
 
 let connectionSource = process.env.MONGO_URL || "mongodb://localhost/test";
 
@@ -32,7 +34,6 @@ connection.once("open", function () {
 });
 
 const User = mongoose.model("user", userSchema);
-
 
 // const luka = new User({ name: 'Luka' });
 
@@ -64,6 +65,8 @@ const User = mongoose.model("user", userSchema);
 // lookUp(searchTerms);
 
 app.get("/api/movie/search", movieController.searchMovies);
+
+app.post("/api/movie/add", movieController.addMovie);
 
 app.get("/", (req, res) => {
   res.send("welcome to the Stage 18 Podcast");
