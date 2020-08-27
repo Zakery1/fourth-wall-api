@@ -22,25 +22,9 @@ module.exports = {
   addMovie: (req, res) => {
     const { name, episodes } = req.body;
     const additionToMovies = new Movie({ name: name, episodes: episodes });
-    console.log(additionToMovies);
-
-    // const uncutGems = new Movie({
-    //   name: "Uncut Gems",
-    //   episodes: [
-    //     {
-    //       seasonNumber: 2,
-    //       episodeName:
-    //         "The Invisible Man, Parasite, Uncut Gems, Good Night and Good Luck, Circle",
-    //     },
-    //     {
-    //       seasonNumber: 2,
-    //       episodeName:
-    //         "Tenet Release Delayed, Top 10 Movies of the Decade, Tampopo and 12 O’Clock High",
-    //     },
-    //   ],
-    // });
-
-    // console.log(name, episodes);
+    additionToMovies.save(function (err, additionToMovies) {
+      if (err) return console.error(err);
+    });
     res.send("hey");
   },
 };
