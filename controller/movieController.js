@@ -9,8 +9,10 @@ const Movie = mongoose.model("movie", movieSchema);
 
 module.exports = {
   searchMovies: (req, res) => {
-    async function lookUp(st) {
-      const newReg = new RegExp(st, "i");
+    async function lookUp(searchTerm) {
+      //remove surrounding whitespaces and extra whitespace between search terms
+      searchTerm = searchTerm.replace(/\s+/g, " ").trim();
+      const newReg = new RegExp(searchTerm, "i");
       const myResult = await Movie.find(
         { name: newReg },
         "name episodes"
