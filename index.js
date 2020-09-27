@@ -33,6 +33,8 @@ connection.once("open", function () {
 
 app.get("/api/movie/search", movieController.searchMovies);
 
+app.get("api/movie/all", movieController.getAllMovies);
+
 app.post("/api/movie/add", movieController.addMovie);
 
 app.get("/", (req, res) => {
