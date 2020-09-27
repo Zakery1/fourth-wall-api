@@ -29,4 +29,11 @@ module.exports = {
     });
     res.send("hey");
   },
+  getAllMovies: (req, res) => {
+    async function getMovies() {
+      const movies = await Movie.find().exec();
+      res.send(movies);
+    }
+    getMovies();
+  }
 };
