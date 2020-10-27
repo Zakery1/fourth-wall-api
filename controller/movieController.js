@@ -24,6 +24,7 @@ module.exports = {
   addMovie: (req, res) => {
     const { name, episodes } = req.body;
     const additionToMovies = new Movie({ name: name, episodes: episodes });
+    console.log(episodes)
     additionToMovies.save(function (err, additionToMovies) {
       if (err) return console.error(err);
     });
